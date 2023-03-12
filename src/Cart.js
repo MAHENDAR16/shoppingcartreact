@@ -9,19 +9,20 @@ import { useEffect, useState } from "react";
 import { db } from "./firebase-config/firebase";
 import { addDoc, doc, collection, getDocs, updateDoc, deleteDoc} from "firebase/firestore";
 import basket from './basketitem.js';
+import { cartItemActions } from "./storefiles/cartItems";
 let billIdFirebase = "";
 const Cart = ()=>{  
   
     let prdtData = prdtDataWithPremium;
-    
+   // let [cartData, setCartData] = useState([]);
     let billamount = useSelector((state)=>state.bill.billamount);
     let dispatch = useDispatch();
     console.log("cart page");
 
     const isLoggedIn = useSelector((state)=>state.auth.isLogin);
     const username = useSelector((state)=>state.auth.username);
-    let itemref, basketFire, cartData;
-
+    let itemref, basketFire, cartData = [];
+    
     const sumCart = ()=>{
         for(let i of cartData){
             if(i.itemid !== "tamount"){
@@ -42,6 +43,7 @@ const Cart = ()=>{
             ...doc.data(),
             id : doc.id,
         }))
+      //  setCartData(cartDataFirebase);
         console.log("FIREBASE DATA");
         console.log(cartData);
         sumCart();
@@ -66,14 +68,31 @@ const Cart = ()=>{
 
     const deleteDataFromFirestore = async()=>{
         itemref = collection(db, `${username}`);
+        basketFire = await getDocs(itemref);
+        cartData = basketFire.docs.map((doc)=>({
+            ...doc.data(),
+            id : doc.id,
+        }))
         for(let i of cartData){
             const item = doc(itemref, i.id);
-            await deleteDoc(item);
+            if(i.itemid === "tamount"){
+                await updateDoc(item , {
+                    TotalAmount : 0,
+                })
+            }
+            else{
+                await updateDoc(item, {
+                    quantity : 0,
+                })
+            }
+            console.log("vlear item firebase");
         }
     }
     const clearCart = ()=>{
         dispatch(billActions.makeZero());
+        dispatch(cartItemActions.makeZero())
         deleteDataFromFirestore();
+        console.log(cartData);
     }
     return(
         <>

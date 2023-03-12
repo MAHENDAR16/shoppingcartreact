@@ -13,7 +13,7 @@ import { db } from './firebase-config/firebase';
 import { updateDoc, addDoc, doc, collection, getDocs } from 'firebase/firestore';
 import { cartItemActions } from './storefiles/cartItems';
 const SingleCart = (props)=>{
-    let curritem = props.item;
+  //  let curritem = props.item;
     let basket = props.basket;
     
     let prdtData = prdtDataWithPremium;

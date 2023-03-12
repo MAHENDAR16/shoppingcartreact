@@ -10,6 +10,9 @@ const cartSlice = createSlice({
         subtract(state){
             state.totalCartItem -= 1;
         },
+        makeZero(state){
+            state.totalCartItem = 0;
+        }
     }
 
 })
