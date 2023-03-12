@@ -55,7 +55,7 @@ const Header = ()=>{
 							<li><NavLink to="/products" className={({isActive})=>isActive?classes.active:undefined}>Products</NavLink></li>
 							
 							<li><NavLink to="/contact" className={({isActive})=>isActive?classes.active:undefined}>Contact</NavLink></li>
-							{ isLogin && <li><a>name</a></li>}
+							{ isLogin && <li><a>{username}</a></li>}
 							{ isLogin && <li onClick={logoutUser}>Logout</li>}
 						
 							{ !isLogin && <li><NavLink to="/login" className={({isActive})=>isActive?classes.active:undefined}>Login</NavLink></li>}
