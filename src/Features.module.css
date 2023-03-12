@@ -1,0 +1,102 @@
+/*--------------------------category------------*/
+
+.categories{
+	margin: 70px 0;
+}
+.col_3{
+	flex-basis: 30%;
+	min-width: 250px;/*--such that even when the browser resizes
+	the available width will not be divided into 3 sections of
+	30% each instead img will have a width of 250px or greater.*/
+	margin-bottom: 30px;
+}
+
+.col_3 img{
+	width: 100%;
+}
+
+
+.small_container{
+	
+	max-width: 80%;
+	margin: auto;
+	padding-left: 25px;
+	padding-right: 25px;
+}
+
+
+/*---------------featured products---------*/
+.col_4{
+	
+	flex-basis: 25%;
+	transition: transform 0.5s;
+	margin-bottom: 50px ;/*--useful when resized--*/
+	padding: 10px;
+	min-width: 200px;
+	text-decoration: none;
+}
+
+.col_4 img{
+	width: 100%;
+}
+
+.col_4_2{
+	display: flex;
+	float: right;
+	margin-top: -20px;
+	gap:10px;
+	font-size: 1rem;
+	z-index: 1000;
+	font-weight: 200;
+}
+
+.col_4_2 .fa-minus{
+	color: red;
+}
+
+.col_4_2 .fa-plus{
+	color: green;
+}
+.title{
+	
+	text-align: center;
+	position: relative;
+	line-height: 60px;
+	margin: 0 auto 20px;
+	color: #555;
+	
+	
+}
+.title.active{
+	color: white;
+}
+.title::after{
+	content: '';
+	position: absolute;
+	background: #ff523b;
+	transform: translateX(-50%);
+	width: 80px;
+	height: 5px;
+	bottom: 0;
+	left: 50%;
+	border-radius: 5px;
+}
+
+.rating i{
+	color: #ff523b;
+}
+.col_4 h4{
+	color: #ff523b;
+	font-weight: normal;
+	
+
+}
+.col_4 p{
+	font-size: 1rem;
+	font-weight: 300;
+
+}
+
+.col_4:hover{
+	transform: translateY(-5px);
+}
