@@ -12,13 +12,11 @@ import { cartItemActions } from './storefiles/cartItems';
 const Header = ()=>{
 	const itemCount = useSelector((state)=>state.cartItem.totalCartItem);
 	let isLogin = useSelector((state)=>state.auth.isLogin);
+	const dispatch = useDispatch();
 	const username = useSelector((state)=>state.auth.username);
-	const logoutUser = (e)=>{
-		e.preventDefault();
-		authActions.logout();
-		window.location.reload();
+	const logoutUser = ()=>{
+		dispatch(authActions.logout());
 		console.log(isLogin);
-		console.log("logged out");
 	}
 	
 	const [toggleMenu, setToggleMenu] = useState(false);
