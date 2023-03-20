@@ -16,6 +16,7 @@ const Header = ()=>{
 	const username = useSelector((state)=>state.auth.username);
 	const logoutUser = ()=>{
 		dispatch(authActions.logout());
+		dispatch(cartItemActions.makeZero());
 		console.log(isLogin);
 	}
 	
