@@ -10,7 +10,10 @@ import { db } from "./firebase-config/firebase";
 import { addDoc, doc, collection, getDocs, updateDoc, deleteDoc} from "firebase/firestore";
 import basket from './basketitem.js';
 import { cartItemActions } from "./storefiles/cartItems";
+import { useNavigate } from "react-router-dom";
 let billIdFirebase = "";
+let flag = "";
+console.log("check for relaod");
 const Cart = ()=>{  
   
     let prdtData = prdtDataWithPremium;
@@ -50,10 +53,25 @@ const Cart = ()=>{
         console.log(billIdFirebase);
     }
     useEffect(()=>{getValue()}, []);
+
     /*IF USER IS LOGGED IN THEN CREATE A COLLECTION WITH HIS NAME IN FIRESTORE AND STORE HIS CART ITEMS */
+    const navigate = useNavigate();
     const addBill = async()=>{
         itemref = collection(db, `${username}`);
-        if(billIdFirebase === ""){
+        basketFire = await getDocs(itemref);
+        cartData = basketFire.docs.map((doc)=>({
+            ...doc.data(),
+            id : doc.id,
+        }))
+        let f = 0;
+        for(let i of cartData){
+            if(i.itemid === "tamount"){
+                f = 1;
+                billIdFirebase = i.id;
+                break;
+            }
+        }
+        if(f === 0){
             await addDoc(itemref, {
                 TotalAmount : billamount,
                 itemid : "tamount",
@@ -63,6 +81,8 @@ const Cart = ()=>{
             const bill = doc(itemref, billIdFirebase);
             await updateDoc(bill, {TotalAmount : billamount});
         }
+
+        navigate('/bill');
         console.log("buy clicked");
     }
 

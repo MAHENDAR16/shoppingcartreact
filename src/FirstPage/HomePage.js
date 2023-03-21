@@ -32,6 +32,7 @@ const HomePage = ()=>{
 		window.location.reload();
 		console.log(isLogin);
 		console.log("logged out");
+		navigate('/');
 	}
 	
     return (

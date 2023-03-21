@@ -10,11 +10,12 @@ const Contact = ()=>{
                 <div className={classes.row}>
                     <div className={classes.contact_left} id = "left_contact">
                         <h1 className={classes.sub_title}>Contact Me</h1>
-                        <p><FontAwesomeIcon icon={faEnvelope} style = {{marginRight:"15px"}}></FontAwesomeIcon>contact@gmail.com</p>
-                        <p><FontAwesomeIcon icon={faPaperPlane} style = {{marginRight:"15px"}}></FontAwesomeIcon>+91 1234567809</p>
+                        <p><FontAwesomeIcon icon={faEnvelope} style = {{marginRight:"15px"}}></FontAwesomeIcon>mahendar.prakash01@gmail.com</p>
+                        <p><FontAwesomeIcon icon={faPaperPlane} style = {{marginRight:"15px"}}></FontAwesomeIcon>+91 9962409265</p>
                         <div className={classes.social_icons}>
-                            <a href="https://www.linkedin.com/in/mahendar-prakash-416504253/">
-                                <FontAwesomeIcon icon={faLinkedin}/>
+                            <a href="https://www.linkedin.com/in/mahendar-prakash-416504253/" >
+                                <FontAwesomeIcon icon={faLinkedin} style = {{marginRight:"15px"}}/>
+                                connect
                             </a>
                             
                         </div>

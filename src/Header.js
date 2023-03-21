@@ -14,11 +14,7 @@ const Header = ()=>{
 	let isLogin = useSelector((state)=>state.auth.isLogin);
 	const dispatch = useDispatch();
 	const username = useSelector((state)=>state.auth.username);
-	const logoutUser = ()=>{
-		dispatch(authActions.logout());
-		dispatch(cartItemActions.makeZero());
-		console.log(isLogin);
-	}
+	
 	
 	const [toggleMenu, setToggleMenu] = useState(false);
 	const toggleHandler = ()=>{
@@ -27,6 +23,13 @@ const Header = ()=>{
 	const s = useNavigate();
 	const cartHandler = ()=>{
 		s('/cart');
+	}
+
+	const logoutUser = ()=>{
+		dispatch(authActions.logout());
+		dispatch(cartItemActions.makeZero());
+		console.log(isLogin);
+		s('/');
 	}
     return (
         <div className={classes.container}>

@@ -8,6 +8,7 @@ import Account from './LoginLogout/Account';
 import Cart from './Cart';
 import RegisterForm from './LoginLogout/RegisterForm';
 import PrdtDetailPage from './PrdtDetailPage';
+import BillPage from './BillComponents/BillPage';
 function App() {
 
 	const router = createBrowserRouter([
@@ -22,6 +23,7 @@ function App() {
 		{path : '/products/:prdtid', element : <PrdtDetailPage/>, errorElement:<ErrorPage/>},			
 		{path:'/register', element : <RegisterForm/>},
 		{path : '/contact', element : <ContactEle/>, errorElement : <ErrorPage/>},
+		{path:'/bill', element:<BillPage/>, errorElement:<ErrorPage/>},
 	]);
 
   
