@@ -21,13 +21,7 @@ const RegisterForm = ()=>{
             password : pass, 
             email : email,
         })
-        const userRef2 = collection(db, "sampleuser");
-        await addDoc(userRef2, {
-            id : name,
-            username : name,
-            password : pass, 
-            email : email,
-        })
+        
         /*TO SEND AUTH MAIL USING EMAILJS */
         /*e.targer indicates the values to be copied to that template */
         emailjs.sendForm('service_r2a4oer', 'template_761box9', e.target, 'PLCDI4M9Ima-03GRL')

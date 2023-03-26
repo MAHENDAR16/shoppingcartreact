@@ -24,13 +24,15 @@ const Cart = ()=>{
 
     const isLoggedIn = useSelector((state)=>state.auth.isLogin);
     const username = useSelector((state)=>state.auth.username);
-    let itemref, basketFire, cartData = [];
+    let itemref, basketFire, cartData = [], pcartData = [];
+    const [printcartData, setprintcartdata] = useState([]);
     
     const sumCart = ()=>{
         for(let i of cartData){
             if(i.itemid !== "tamount"){
                 let prdtsearch = prdtData.find((y)=>y.id == i.itemid);
                 dispatch(billActions.add(prdtsearch.price * i.quantity));
+                
                 console.log(prdtsearch.price * i.quantity);
                 console.log("infun");
             }
@@ -38,22 +40,32 @@ const Cart = ()=>{
                 billIdFirebase = i.id;
         }
     }
+
+    //const [cartData, setCartData] = useState([]);
+    //const [itemPrintData, setItemPrintData] = useState([]);
     const getValue = async()=>{
         dispatch(billActions.makeZero());
+       
         itemref = collection(db, `${username}`);
         basketFire = await getDocs(itemref);
         cartData = basketFire.docs.map((doc)=>({
             ...doc.data(),
             id : doc.id,
         }))
-      //  setCartData(cartDataFirebase);
+        pcartData = cartData.filter((x)=>x.itemid!=='tamount')
+        setprintcartdata(pcartData);
+        console.log("printcartdata");
+
+        console.log(printcartData)
+       // setCartData(cartDat);
+        //setItemPrintData(cartDat);
         console.log("FIREBASE DATA");
         console.log(cartData);
         sumCart();
         console.log(billIdFirebase);
     }
     useEffect(()=>{getValue()}, []);
-
+    console.log(cartData);
     /*IF USER IS LOGGED IN THEN CREATE A COLLECTION WITH HIS NAME IN FIRESTORE AND STORE HIS CART ITEMS */
     const navigate = useNavigate();
     const addBill = async()=>{
@@ -63,6 +75,7 @@ const Cart = ()=>{
             ...doc.data(),
             id : doc.id,
         }))
+       // setCartData(cartDat)
         let f = 0;
         for(let i of cartData){
             if(i.itemid === "tamount"){
@@ -82,6 +95,8 @@ const Cart = ()=>{
             await updateDoc(bill, {TotalAmount : billamount});
         }
 
+      //  setItemPrintData(cartDat.filter((x)=>x.itemid !== 'tamount'));
+        //console.log(itemPrintData)
         navigate('/bill');
         console.log("buy clicked");
     }
@@ -93,6 +108,8 @@ const Cart = ()=>{
             ...doc.data(),
             id : doc.id,
         }))
+        //setCartData(cartDat);
+        //setItemPrintData(cartDat);
         for(let i of cartData){
             const item = doc(itemref, i.id);
             if(i.itemid === "tamount"){
@@ -114,6 +131,7 @@ const Cart = ()=>{
         deleteDataFromFirestore();
         console.log(cartData);
     }
+ //   console.log(itemPrintData);
     return(
         <>
             <Header/>
@@ -126,8 +144,8 @@ const Cart = ()=>{
 
                 {billamount > 0 && 
                     <div id = "carti" className={classes.cartic}>
-                        {basket.map((x)=>{
-                            return <SingleCart id = {x.id} item = {x.item} basket = {basket} />
+                        {printcartData.map((x)=>{
+                            return <SingleCart key = {x.itemid} id = {x.itemid} item = {x.quantity} basket = {basket} />
                         })}
                     </div>
                 }

@@ -5,7 +5,7 @@ import classes from '../HomePage.module.css';
 import store from '../storefiles/globalstore';
 import { authActions } from '../storefiles/authenticated';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { db } from '../firebase-config/firebase';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 const Account = ()=>{
@@ -13,6 +13,7 @@ const Account = ()=>{
     const [msg, setMsg] = useState('');
     const [name, setName] = useState('');
     const [pass, setPass] = useState('');
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const loginHandler = async(event)=>{
         event.preventDefault();
@@ -32,6 +33,7 @@ const Account = ()=>{
         else{
             setMsg("LOGGED IN SUCCESSFULLY");
             dispatch(authActions.login(name));
+            navigate('/');
         }
 
         setName('');

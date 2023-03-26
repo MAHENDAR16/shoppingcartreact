@@ -7,15 +7,32 @@ import { authActions } from './storefiles/authenticated';
 import { useSelector, useDispatch } from 'react-redux';
 import cartSlice from './storefiles/cartItems';
 import { cartItemActions } from './storefiles/cartItems';
-
-
+import { db } from "./firebase-config/firebase";
+import { addDoc, doc, collection, getDocs, updateDoc, deleteDoc} from "firebase/firestore";
 const Header = ()=>{
 	const itemCount = useSelector((state)=>state.cartItem.totalCartItem);
 	let isLogin = useSelector((state)=>state.auth.isLogin);
 	const dispatch = useDispatch();
 	const username = useSelector((state)=>state.auth.username);
-	
-	
+	let itemref, basketFire, cartData = [];
+	const getValue = async()=>{
+		if(isLogin){
+			dispatch(cartItemActions.makeZero());
+			itemref = collection(db, `${username}`);
+			basketFire = await getDocs(itemref);
+			cartData = basketFire.docs.map((doc)=>({
+				...doc.data(),
+				id : doc.id,
+			}))
+			for(let i of cartData){
+				if(i.itemid!=='tamount'){
+					for(let j = 0;j<i.quantity;j++)
+						dispatch(cartItemActions.add())
+				}
+			}
+		}
+	}
+	useEffect(()=>{getValue()}, []);
 	const [toggleMenu, setToggleMenu] = useState(false);
 	const toggleHandler = ()=>{
 		setToggleMenu((prev) => !prev);

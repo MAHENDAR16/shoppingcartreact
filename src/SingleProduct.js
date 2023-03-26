@@ -6,35 +6,72 @@ import { useEffect, useState } from 'react';
 import { prdtDataWithPremium } from './ProductsData';
 import { billActions } from "./storefiles/billamount";
 import { useSelector, useDispatch, Provider } from "react-redux";
-import basket from './basketitem.js';
+import basket from './basketitem';
 import { cartItemActions } from './storefiles/cartItems';
 import { db } from './firebase-config/firebase';
-import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
+
+
 const SingleProduct = (props)=>{
     let x = props.data;
-    let prdtData = prdtDataWithPremium.filter((x)=>x.id!=="premium");
-    let search = basket.find((d)=>d.id === x.id);
-    const dispatch = useDispatch();
-    /*QUANTITY SHOULE BE A USESTATE VALUE THEN ONLY ON CHANGING THE QUANTITY THE PAGE WILL RELOAD ITS ENTIRE CONTENT */
-    const [quantity, setQuantity] = useState((search!==undefined)?search.item : 0);
- 
-    let datasearch = prdtData.find((y)=>y.id == x.id);
+    const dispatch = useDispatch()   
+    //let search = basket.find((d)=>d.id === x.id)
+    //let basket = [];
+    //const [quantity, setQuantity] = useState((search!==undefined)?search.item : 0);
+    
+    /*console.log("props carts")
+    console.log(props.cart)
+    const getValue = () =>{
+        for(let i of props.cart){
+            if(i.itemid !== 'tamount'){
+                basket.push({
+                    id:i.itemid,
+                    item:i.quantity,
+                })
+            }
+            
+        }
+        search = basket.find((d)=>d.id === x.id);
+        setQuantity((search!==undefined)?search.item : 0)
+    }
+    useEffect(()=>{getValue()}, [])*/
 
+    //const [quantity, setQuantity] = useState((search!==undefined)?search.item : 0);
+    //setQuantity((search!==undefined)?search.item : 0);
+    
+   // let datasearch = prdtData.find((y)=>y.id == x.id);
+   // const [quantity, setQuantity] = useState(0);
     const loggedin = useSelector((state)=>state.auth.isLogin);
     const username = useSelector((state)=>state.auth.username);
-    let itemref, basketFire, cartData;
+    let itemref, basketFire, cartDat, search, basket = [];
+    //let search;
     
+    const [cartData, setCartData] = useState([]);
+    const [quantity, setQuantity] = useState(0);
     /*IF USER IS LOGGED IN THEN CREATE A COLLECTION WITH HIS NAME IN FIRESTORE AND STORE HIS CART ITEMS */
     const getValue = async()=>{
-        itemref = collection(db, `${username}`);
-        basketFire = await getDocs(itemref);
-        cartData = basketFire.docs.map((doc)=>({
-            ...doc.data(),
-            id : doc.id,
-        }))
+        if(loggedin){
+            itemref = collection(db, `${username}`);
+            basketFire = await getDocs(itemref);
+            cartDat = basketFire.docs.map((doc)=>({
+                ...doc.data(),
+                id : doc.id,
+            }))
+            for(let i of cartDat){
+                if(i.itemid !== 'tamount'){
+                    basket.push({
+                        id:i.itemid,
+                        item:i.quantity,
+                    })
+                }
+            }
+            setCartData(cartDat);
+            search = basket.find((d)=>d.id === x.id);
+            setQuantity((search!==undefined)?search.item : 0)
+        }
     }
-    useEffect(()=>{getValue()}, []);
-
+    useEffect(()=>{getValue()}, );
+    
     const navigate = useNavigate();
 
     const updateDocInFireIncrement = async ()=>{
@@ -47,6 +84,7 @@ const SingleProduct = (props)=>{
                 await updateDoc(currItem, {
                     quantity : quantity+1,
                 })
+                console.log("UPDATE IN FIREBASE");
             }
         }
         if(f === 0){
@@ -88,6 +126,7 @@ const SingleProduct = (props)=>{
 
        
         let search = basket.find((y)=>y.id === x.id);
+       // let search = cartData.find((y)=>y.itemid === x.id);
         if(search === undefined){
             basket.push({
                 id : x.id,
@@ -98,6 +137,7 @@ const SingleProduct = (props)=>{
         }
         else{
             search.item += 1;
+            console.log("add");
             setQuantity(search.item);
         }
         updateDocInFireIncrement();
@@ -114,7 +154,7 @@ const SingleProduct = (props)=>{
             return;
         }
         let search = basket.find((y)=>y.id === x.id);
-        
+        //let search = cartData.find((y)=>y.itemid === x.id);
         if(search!== undefined && search.item !== 0){
             search.item -= 1;
 

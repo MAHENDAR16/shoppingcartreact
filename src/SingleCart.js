@@ -12,9 +12,11 @@ import cartSlice from './storefiles/cartItems';
 import { db } from './firebase-config/firebase';
 import { updateDoc, addDoc, doc, collection, getDocs } from 'firebase/firestore';
 import { cartItemActions } from './storefiles/cartItems';
+
 const SingleCart = (props)=>{
   //  let curritem = props.item;
-    let basket = props.basket;
+    //let basket = props.basket;
+    let basket = []
     
     let prdtData = prdtDataWithPremium;
     let search = prdtData.find((x)=>x.id === props.id)||[];//imp to give empty array 
@@ -35,6 +37,16 @@ const SingleCart = (props)=>{
             ...doc.data(),
             id : doc.id,
         }))
+        /*COPYING THE VALUE IN CARTDATA TO BASKET */
+        for(let i of cartData)
+        {
+            if(i.itemid !== 'tamount'){
+                basket.push({
+                    id:i.itemid,
+                    item:i.quantity,
+                })
+            }
+        }
     }
     if(loggedin)
         getValue();   
@@ -71,6 +83,7 @@ const SingleCart = (props)=>{
     }
        
     const increment = ()=>{
+        console.log("CART INC");
         let searchfun = basket.find((y)=>y.id === props.id);
         if(searchfun === undefined){
             basket.push({
@@ -90,6 +103,7 @@ const SingleCart = (props)=>{
     }
 
     const decrement = ()=>{
+        console.log("CART DEC");        
         let searchfun = basket.find((y)=>y.id === props.id);
         if(searchfun!== undefined && searchfun.item !== 0){
             searchfun.item -= 1;

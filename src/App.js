@@ -9,6 +9,8 @@ import Cart from './Cart';
 import RegisterForm from './LoginLogout/RegisterForm';
 import PrdtDetailPage from './PrdtDetailPage';
 import BillPage from './BillComponents/BillPage';
+import CheckBackend from './CheckBackend';
+import Firebasedata from './Firebasedata';
 function App() {
 
 	const router = createBrowserRouter([
@@ -24,6 +26,7 @@ function App() {
 		{path:'/register', element : <RegisterForm/>},
 		{path : '/contact', element : <ContactEle/>, errorElement : <ErrorPage/>},
 		{path:'/bill', element:<BillPage/>, errorElement:<ErrorPage/>},
+		{path:'/check', element:<CheckBackend/>}
 	]);
 
   

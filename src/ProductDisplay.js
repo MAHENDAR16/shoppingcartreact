@@ -1,17 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import classes from './HomePage.module.css';
 import Products from './FirstPage/Products';
 import SingleProduct from './SingleProduct';
 import { prdtDataWithPremium } from './ProductsData';
 import { useSelector, useDispatch } from 'react-redux';
+import { db } from './firebase-config/firebase';
+import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 const ProductDisplay = ()=>{
     let type, s_type;
+
     let prdtData = prdtDataWithPremium.filter((x)=>x.id!=="premium");
+
     const [stdata, setstdata] = useState(prdtData.slice());
     /*SHOULD USE USESTATE TO CHANGE THE VALUE OF A VARIABLE SO THAT WHEN IT CHANGES THE ENTIRE REACT COMPONENT 
     RELOADES */
-    
-    console.log(prdtData);
+
+    const loggedin = useSelector((state)=>state.auth.isLogin);
+    const username = useSelector((state)=>state.auth.username);
+   
+
     function changeContent(){
         s_type = document.getElementById('select');
 	    type = s_type.value;
@@ -24,6 +31,26 @@ const ProductDisplay = ()=>{
         
         console.log(stdata);
     }
+    let itemref, basketFire, cartDat = [];
+    const [cartData, setCartData] = useState([]);
+    /*IF USER IS LOGGED IN THEN CREATE A COLLECTION WITH HIS NAME IN FIRESTORE AND STORE HIS CART ITEMS */
+    const getValue = async()=>{
+        if(loggedin){
+            itemref = collection(db, `${username}`);
+            basketFire = await getDocs(itemref);
+            cartDat = basketFire.docs.map((doc)=>({
+                ...doc.data(),
+                id : doc.id,
+            }))
+            /*WE SHOULD SET THE DATA INSIDE USEEFFECT FN ITSELF OTHERWISE THE DATA WOULD BE LOST
+        , BCOZ CARTDATA HERE IS NOT GLOBAL */
+            setCartData(cartDat);   
+        }
+        
+    }
+    console.log("cart data")
+    console.log(cartData)
+    useEffect(()=>{getValue()}, []);
 
     return (
         <div className={classes.small_container}>
@@ -40,7 +67,7 @@ const ProductDisplay = ()=>{
             </div>
             <div className={classes.row} id="itemcontainer">
                 {stdata.map((x)=>{
-                    return <SingleProduct data = {x} key = {x.id}></SingleProduct>
+                    return <SingleProduct data = {x} key = {x.id} cart = {cartData}></SingleProduct>
                 })}
             </div>
 
