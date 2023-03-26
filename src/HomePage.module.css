@@ -214,6 +214,9 @@ p{
 	width: 100%;
 }
 
+.col_4_1{
+	text-align: left;
+}
 .col_4_2{
 	display: flex;
 	float: right;
