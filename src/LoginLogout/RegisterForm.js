@@ -43,10 +43,10 @@ const RegisterForm = ()=>{
         <div className={classes.account_page}>
             <div className={classes.container}>
                 <div className={classes.row}>
-                    <div className={classes.col_2}>
+                    <div className={classes.fcol_2}>
                         <img src="images/image1.png" width="100%"/>
                     </div>	
-                    <div className={classes.col_2}>
+                    <div className={classes.fcol_2}>
                         <div className={classes.form_container}>
                             <span>Register</span>
 

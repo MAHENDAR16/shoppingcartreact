@@ -35,7 +35,8 @@ const HomePage = ()=>{
 	}
 	useEffect(()=>{getValue()}, []);
 	const navigate = useNavigate();
-	const navigateToNextPage = ()=>{
+	const navigateToNextPage = (event)=>{
+		event.preventDefault()
 		navigate('/products');
 	}
 	const [toggleMenu, setToggleMenu] = useState(false);

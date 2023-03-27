@@ -47,13 +47,13 @@ const Account = ()=>{
             <div className={classes.account_page}>
                 <div className={classes.container}>
                     <div className={classes.row}>
-                        <div className={classes.col_2}>
+                        <div className={classes.fcol_2}>
                             <img src="images/image1.png" width="100%"/>
                         </div>	
-                        <div className={classes.col_2}>
+                        <div className={classes.fcol_2}>
 
                             <div className={classes.form_container}>
-                                <span>Login</span>
+                                <span style={{marginTop:"10px"}}>Login</span>
                                 {msg!==null && <h3>{msg}</h3>}
                                 <form>
                                     <input type="text" name="" placeholder="Enter your name"
