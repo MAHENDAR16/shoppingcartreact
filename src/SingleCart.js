@@ -7,11 +7,12 @@ import {faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { billActions } from "./storefiles/billamount";
 import { useSelector, useDispatch, Provider } from "react-redux";
 import ProductDisplay from './ProductDisplay';
-
+import classNames from 'classnames'
 import cartSlice from './storefiles/cartItems';
 import { db } from './firebase-config/firebase';
 import { updateDoc, addDoc, doc, collection, getDocs } from 'firebase/firestore';
 import { cartItemActions } from './storefiles/cartItems';
+import { Link } from 'react-router-dom';
 
 const SingleCart = (props)=>{
   //  let curritem = props.item;
@@ -28,7 +29,7 @@ const SingleCart = (props)=>{
     const loggedin = useSelector((state)=>state.auth.isLogin);
     const username = useSelector((state)=>state.auth.username);
     let itemref, basketFire, cartData;
-
+    const [size, setSize] = useState();
     /*IF USER IS LOGGED IN THEN CREATE A COLLECTION WITH HIS NAME IN FIRESTORE AND STORE HIS CART ITEMS */
     const getValue = async()=>{
         itemref = collection(db, `${username}`);
@@ -46,12 +47,17 @@ const SingleCart = (props)=>{
                     item:i.quantity,
                 })
             }
+            if(i.itemid === props.id){
+                setSize(i.size);
+            }
         }
+        console.log("to check")
+        console.log(basket)
     }
     if(loggedin)
         getValue();   
 
-    const updateDocInFireIncrement = async ()=>{
+  /*  const updateDocInFireIncrement = async ()=>{
         let f = 0;
         for(let i of cartData){
             if(i.itemid === props.id)
@@ -111,7 +117,7 @@ const SingleCart = (props)=>{
             dispatch(cartItemActions.subtract());// decrement the count of cart.
 
             /*THE BELOW STATEMENT WILL SET THE QUANTITY OF THE ITEM SINCE IT IS USESTATE HOOK WHEN THE CONTENT CHNAGES 
-            THIS COMPONENET IS RE-RENEDERED HENCE IF QUANTITY == 0 THAT ITEM WILL NOT BE DISPLAYED.*/
+            THIS COMPONENET IS RE-RENEDERED HENCE IF QUANTITY == 0 THAT ITEM WILL NOT BE DISPLAYED.
             setQuantity(searchfun.item);
             
             dispatch(billActions.minus(search.price));//reducing the price of item from bill
@@ -119,25 +125,27 @@ const SingleCart = (props)=>{
         }
         else    return;
     }
-
+*/
     return (
         <>
         {quantity > 0 && 
         <>
-            <section id = "d-12"  className={classes.cart_hold}>
+            <Link to = {`/products/${props.id}`} id = "d-12"  
+            className={classNames(classes.cart_hold, classes.cart_hold_exp)}>
                 <div className = {classes.cart_hold_1}>
                     <img width = "100px" src={search.imagesrc}/>
                 </div>
                 <div className = {classes.cart_hold_2}>
                     <h4>{search.name}</h4>
                     <p>$ {quantity*search.price}</p>
+                    <p style={{fontSize:"1rem"}}>{size}</p>
                     <div className={classes.btng}>
-                        <FontAwesomeIcon icon={faMinus} style = {{color:"red", cursor:"pointer"}} onClick = {decrement}/>
-                        <div class="quantity">{quantity}</div>
-                        <FontAwesomeIcon icon={faPlus} style = {{color:"green", cursor:"pointer"}} onClick = {increment}/>
+                        {/*<FontAwesomeIcon icon={faMinus} style = {{color:"red", cursor:"pointer"}} onClick = {decrement}/>*/}
+                        <div class="quantity" style={{fontSize:"1rem"}}>Quantity : {quantity}</div>
+                        {/*<FontAwesomeIcon icon={faPlus} style = {{color:"green", cursor:"pointer"}} onClick = {increment}/>*/}
                     </div>
                 </div>
-            </section>
+            </Link>
         </>
         }
         </>

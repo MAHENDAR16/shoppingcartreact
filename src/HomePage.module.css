@@ -2,7 +2,6 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-
 }
 
 .header{
@@ -229,12 +228,37 @@ p{
 	font-weight: 200;
 }
 
+.col_4_2 a{
+	text-decoration: none;
+	color: white;
+	background-color: #ff523b;
+	border-radius: 20px;
+	padding: 4px 10px;
+}
 .col_4_2 .fa-minus{
 	color: red;
 }
 
 .col_4_2 .fa-plus{
 	color: green;
+}
+
+.detailData{
+	display: flex;
+	margin: 20px 0;
+	gap:20px;
+	cursor: pointer;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.sizeSelect{
+	margin-top: 15px;
+	border-radius: 20px;
+	background:#ff523b;
+	padding: 10px;
+	color: white;
+	width: fit-content;
 }
 .title{
 	
@@ -716,8 +740,12 @@ form a{
 	margin: auto;
 	border-radius: 20px;
 	border: 2px solid #ff523b;
+	transition: 1s;
+	cursor: pointer;
 }
-
+.cart_hold_exp:hover{
+	transform: translateY(-10px);
+}
 .cart_hold_1 img{
 	float: left;
 	border-radius: 20px;

@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 const PrdtDetailPage = ()=>{
     const params = useParams();/*THIS IS USED TO FETCH THE DATA FROM THAT LINK LIKE ID */
     let prdtData = prdtDataWithPremium.filter((x)=>x.id!=="premium");
+    const currPrdt = prdtData.find((x)=>x.id === params.prdtid)
     console.log(params);
     const stdata = prdtData.slice(0, 4);
     const helper = ()=>{
@@ -19,7 +20,7 @@ const PrdtDetailPage = ()=>{
     return (
         <>
             <Header></Header>
-            <PrdtDetailDesc id2 = {params.prdtid} helpfn = {helper}/>
+            <PrdtDetailDesc id2 = {params.prdtid} prdtname = {currPrdt.name} helpfn = {helper}/>
             <div className={classes.small_container}>
                 <div className={classes.row_2}>
                     <h2>Related Products</h2>

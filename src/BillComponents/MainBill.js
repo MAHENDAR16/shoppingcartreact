@@ -7,10 +7,9 @@ import { prdtDataWithPremium } from "../ProductsData";
 import basket from '../basketitem';
 
 function MainBill() {
-    let itemref, basketFire, cartData = [];
+    let itemref, basketFire, cartData = [], search;
     let prdtData = prdtDataWithPremium;
     const username = useSelector((state)=>state.auth.username);
-
     let [basketdata, setBasketData] = useState([]);
     const getValue = async ()=>{
         itemref = collection(db, `${username}`);
@@ -41,6 +40,7 @@ function MainBill() {
                     <div className = {classes.cart_hold_2}>
                         <h4>{search.name}</h4>
                         <p>$ {doc.quantity*search.price}</p>
+                        <p style={{fontSize:"1rem"}}>{doc.size}</p>
                         <div className={classes.btng}>
                             <div class="quantity">{doc.quantity}</div>
                         </div>

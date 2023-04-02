@@ -1,7 +1,7 @@
 import {Link, useNavigate} from 'react-router-dom';
 import classes from './HomePage.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import {faMinus, faPlus, faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { prdtDataWithPremium } from './ProductsData';
 import { billActions } from "./storefiles/billamount";
@@ -14,33 +14,7 @@ import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, serverT
 
 const SingleProduct = (props)=>{
     let x = props.data;
-    const dispatch = useDispatch()   
-    //let search = basket.find((d)=>d.id === x.id)
-    //let basket = [];
-    //const [quantity, setQuantity] = useState((search!==undefined)?search.item : 0);
-    
-    /*console.log("props carts")
-    console.log(props.cart)
-    const getValue = () =>{
-        for(let i of props.cart){
-            if(i.itemid !== 'tamount'){
-                basket.push({
-                    id:i.itemid,
-                    item:i.quantity,
-                })
-            }
-            
-        }
-        search = basket.find((d)=>d.id === x.id);
-        setQuantity((search!==undefined)?search.item : 0)
-    }
-    useEffect(()=>{getValue()}, [])*/
-
-    //const [quantity, setQuantity] = useState((search!==undefined)?search.item : 0);
-    //setQuantity((search!==undefined)?search.item : 0);
-    
-   // let datasearch = prdtData.find((y)=>y.id == x.id);
-   // const [quantity, setQuantity] = useState(0);
+    const dispatch = useDispatch();
     const loggedin = useSelector((state)=>state.auth.isLogin);
     const username = useSelector((state)=>state.auth.username);
     let itemref, basketFire, cartDat, search, basket = [];
@@ -49,6 +23,7 @@ const SingleProduct = (props)=>{
     const [cartData, setCartData] = useState([]);
     const [quantity, setQuantity] = useState(0);
     /*IF USER IS LOGGED IN THEN CREATE A COLLECTION WITH HIS NAME IN FIRESTORE AND STORE HIS CART ITEMS */
+    /*
     const getValue = async()=>{
         if(loggedin){
             itemref = collection(db, `${username}`);
@@ -70,7 +45,7 @@ const SingleProduct = (props)=>{
             setQuantity((search!==undefined)?search.item : 0)
         }
     }
-    useEffect(()=>{getValue()}, );
+    useEffect(()=>{getValue()}, []);
     
     const navigate = useNavigate();
 
@@ -170,18 +145,25 @@ const SingleProduct = (props)=>{
         
         
         //update();
-    }    
+    }   */
+    
+    
     return (
-        <Link id = "d-12" to = {`/products/${x.id}`} className={classes.col_4} key = {x.id}>
+        <Link id = "d-12" to = {`/products/${x.id}`} className={classes.col_4} onClick={() => window.scrollTo(0, 0)} key = {x.id}>
 			<div className = {classes.col_4_1}>
                 <img src={require(`./${x.imagesrc}`)}/>
 				<h4>{x.name}</h4>
 				<p>$ {x.price*(quantity === 0?1 : quantity)}</p>
 			</div>
 			<div className = {classes.col_4_2}>
+                {/*
                 <FontAwesomeIcon icon={faMinus} style = {{color:"red"}} onClick = {decrement}/>
                 <div className={classes.quantity} style={{fontSize:"1.2rem"}}>{quantity}</div>
                 <FontAwesomeIcon icon={faPlus} style = {{color:"green"}} onClick = {increment}/>
+                */}
+                <Link to = {`/products/${x.id}`} onClick={() => window.scrollTo(0, 0)}>View 
+                    <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon>
+                </Link>
 			</div>
 		</Link>
     )

@@ -8,7 +8,7 @@ const Products = (props)=>{
             <div className = {classes.row}>
                 {props.prdt.map((x)=>{
                     return (
-                        <Link to = {`/products/${x.id}`} className={classes.col_4} >
+                        <Link to = {`/products/${x.id}`} onClick = {()=>window.scrollTo(0, 0)} className={classes.col_4} >
                             <img src={x.imagesrc}/>
                             <h4>{x.name}</h4>
                             <p>$ {x.price}</p>

@@ -7,7 +7,7 @@ import { billActions } from "./storefiles/billamount";
 import { useSelector, useDispatch, Provider } from "react-redux";
 import { useEffect, useState } from "react";
 import { db } from "./firebase-config/firebase";
-import { addDoc, doc, collection, getDocs, updateDoc, deleteDoc} from "firebase/firestore";
+import { addDoc, doc, setDoc, collection, getDocs, updateDoc, deleteDoc} from "firebase/firestore";
 import basket from './basketitem.js';
 import { cartItemActions } from "./storefiles/cartItems";
 import { useNavigate } from "react-router-dom";
@@ -85,14 +85,14 @@ const Cart = ()=>{
             }
         }
         if(f === 0){
-            await addDoc(itemref, {
+            await setDoc(doc(db, `${username}`, "BILL"), {
                 TotalAmount : billamount,
                 itemid : "tamount",
             })
         }
         else{
-            const bill = doc(itemref, billIdFirebase);
-            await updateDoc(bill, {TotalAmount : billamount});
+           // const bill = doc(itemref, billIdFirebase);
+            await updateDoc(doc(db, `${username}`, "BILL"), {TotalAmount : billamount});
         }
 
       //  setItemPrintData(cartDat.filter((x)=>x.itemid !== 'tamount'));
@@ -138,8 +138,8 @@ const Cart = ()=>{
             <div className={classes.cart_page}>
                 <div className={classes.hold_p}>
                     <h2 id = "price_print">Total Price : {billamount}</h2>
-                    <button id = "ok" className={classes.okc} onClick = {addBill}>Buy</button>
-                    <button className={classes.clearc} onClick = {clearCart}>Clear Cart</button>
+                    <button id = "ok" className={classes.okc} onClick = {addBill} style = {{cursor:"pointer"}}>Buy</button>
+                    <button className={classes.clearc} onClick = {clearCart} style = {{cursor:"pointer"}}>Clear Cart</button>
                 </div>
 
                 {billamount > 0 && 
