@@ -30,7 +30,7 @@ const PrdtDetailPage = ()=>{
             <div className={classes.row} id="itemcontainer"style={{margin:"20px"}}>
                 {stdata.map((x)=>{
                     return (
-                    <Link to = {`/products/${x.id}`} className={classes.col_4} >
+                    <Link to = {`/products/${x.id}`} onClick={()=>window.scrollTo(0, 0)} className={classes.col_4} >
                         <img src={require(`./${x.imagesrc}`)}/>
                         <h4>{x.name}</h4>
                         <p>$ {x.price}</p>

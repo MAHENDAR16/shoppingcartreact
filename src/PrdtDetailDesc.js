@@ -238,7 +238,7 @@ export default function PrdtDetailDesc(props){
 			<div className={classes.col_2}>
 				<p>Home / {currPrdt.name}</p>
 				<h1>{currPrdt.name}</h1>
-				<h4>$ {((quantity!==0)?quantity:1) * currPrdt.price}</h4>
+				<h4>$ {((quantity == 0 || quantity == null)?1:quantity) * currPrdt.price}</h4>
 				<select ref = {sizeRef}>
 					<option>Select-Size</option>
 					<option>XXL</option>

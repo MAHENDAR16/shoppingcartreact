@@ -130,7 +130,7 @@ const SingleCart = (props)=>{
         <>
         {quantity > 0 && 
         <>
-            <Link to = {`/products/${props.id}`} id = "d-12"  
+            <Link to = {`/products/${props.id}`} onClick={()=>window.scrollTo(0, 0)} id = "d-12"  
             className={classNames(classes.cart_hold, classes.cart_hold_exp)}>
                 <div className = {classes.cart_hold_1}>
                     <img width = "100px" src={search.imagesrc}/>
