@@ -75,8 +75,12 @@ const Cart = ()=>{
             ...doc.data(),
             id : doc.id,
         }))
+        await setDoc(doc(db, `${username}`, "BILL"), {
+            TotalAmount : billamount,
+            itemid : "tamount",
+        })
        // setCartData(cartDat)
-        let f = 0;
+       /* let f = 0;
         for(let i of cartData){
             if(i.itemid === "tamount"){
                 f = 1;
@@ -84,6 +88,7 @@ const Cart = ()=>{
                 break;
             }
         }
+        
         if(f === 0){
             await setDoc(doc(db, `${username}`, "BILL"), {
                 TotalAmount : billamount,
@@ -94,7 +99,7 @@ const Cart = ()=>{
            // const bill = doc(itemref, billIdFirebase);
             await updateDoc(doc(db, `${username}`, "BILL"), {TotalAmount : billamount});
         }
-
+        */
       //  setItemPrintData(cartDat.filter((x)=>x.itemid !== 'tamount'));
         //console.log(itemPrintData)
         navigate('/bill');
@@ -108,22 +113,10 @@ const Cart = ()=>{
             ...doc.data(),
             id : doc.id,
         }))
-        //setCartData(cartDat);
-        //setItemPrintData(cartDat);
         for(let i of cartData){
-            const item = doc(itemref, i.id);
-            if(i.itemid === "tamount"){
-                await updateDoc(item , {
-                    TotalAmount : 0,
-                })
-            }
-            else{
-                await updateDoc(item, {
-                    quantity : 0,
-                })
-            }
-            console.log("vlear item firebase");
+            await deleteDoc(doc(db, `${username}`, i.id)).then(()=>console.log("deleted")).catch((err)=>console.log(err));
         }
+        
     }
     const clearCart = ()=>{
         dispatch(billActions.makeZero());

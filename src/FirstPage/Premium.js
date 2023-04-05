@@ -13,7 +13,7 @@ const Premium = ()=>{
                         <h1>Apple Watch Ultra</h1>
                         <small>The most rugged and capable Apple Watch ever, designed for exploration, adventure, and endurance.With a 49mm aerospace-grade titanium case extra-long battery life.</small>
                         <br></br>
-                        <Link to = "/products/premium" className={classes.btn}>Buy Now &#8594;</Link>
+                        <Link to = "/products/premium" onClick={()=>window.scrollTo(0, 0)} className={classes.btn}>Buy Now &#8594;</Link>
                     </div>
                 </div>
             </div>

@@ -22,6 +22,7 @@ function App() {
 		{path : '/products', element : <SecondPage/>, errorElement : <ErrorPage/>},
 		{path : '/login', element : <Account/>},
 		{path : '/cart', element : <Cart/>},
+		
 		{path : '/products/:prdtid', element : <PrdtDetailPage/>, errorElement:<ErrorPage/>},			
 		{path:'/register', element : <RegisterForm/>},
 		{path : '/contact', element : <ContactEle/>, errorElement : <ErrorPage/>},

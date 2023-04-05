@@ -9,10 +9,11 @@ import SingleProduct from "./SingleProduct";
 import { Link } from "react-router-dom";
 const PrdtDetailPage = ()=>{
     const params = useParams();/*THIS IS USED TO FETCH THE DATA FROM THAT LINK LIKE ID */
-    let prdtData = prdtDataWithPremium.filter((x)=>x.id!=="premium");
+  //  let prdtData = prdtDataWithPremium.filter((x)=>x.id!=="premium");
+    let prdtData = prdtDataWithPremium;
     const currPrdt = prdtData.find((x)=>x.id === params.prdtid)
     console.log(params);
-    const stdata = prdtData.slice(0, 4);
+    const stdata = prdtData.slice(1, 5);
     const helper = ()=>{
         console.log("helper called");
        // window.location.reload(true);
@@ -24,7 +25,7 @@ const PrdtDetailPage = ()=>{
             <div className={classes.small_container}>
                 <div className={classes.row_2}>
                     <h2>Related Products</h2>
-                    <Link to = "/products" className={classes.btn}>View More &#8594;</Link>
+                    <Link to = "/products" className={classes.btn} onClick={()=>window.scrollTo(0, 0)}>View More &#8594;</Link>
                 </div>
 	        </div>
             <div className={classes.row} id="itemcontainer"style={{margin:"20px"}}>

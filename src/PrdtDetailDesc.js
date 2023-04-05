@@ -194,6 +194,8 @@ export default function PrdtDetailDesc(props){
 	
 	
 	const addToCart = async ()=>{
+		if(!loggedin)
+			navigate('/login');
 		console.log("printquu");
 		console.log(quantity)
 		/*ONLY WHEN THE QUANTITY IS >0 CHANGE IS DONE IN BACKEND */
