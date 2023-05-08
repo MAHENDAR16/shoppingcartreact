@@ -56,7 +56,7 @@ export default function PrdtDetailDesc(props){
     const username = useSelector((state)=>state.auth.username);
 	const loggedin = useSelector((state)=>state.auth.isLogin);
     const [cartData, setCartData] = useState([]);
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
 	const [currSize, setCurrSize] = useState(null);
 	const sizeRef = useRef(currSize);
 	const [itemFromFire, setitemFromFire] = useState(0);
@@ -89,7 +89,7 @@ export default function PrdtDetailDesc(props){
             setCartData(cartDat);
             search = basketo.find((d)=>d.id === props.id2);
 			setBasket(basketo)
-            setQuantity((search!==undefined)?search.item : 0);
+            setQuantity((search!==undefined)?search.item : 1);
         }
     }
 

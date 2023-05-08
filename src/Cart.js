@@ -130,7 +130,7 @@ const Cart = ()=>{
             <Header/>
             <div className={classes.cart_page}>
                 <div className={classes.hold_p}>
-                    <h2 id = "price_print">Total Price : {billamount}</h2>
+                    <h2 id = "price_print">Total Price : $ {billamount}</h2>
                     <button id = "ok" className={classes.okc} onClick = {addBill} style = {{cursor:"pointer"}}>Buy</button>
                     <button className={classes.clearc} onClick = {clearCart} style = {{cursor:"pointer"}}>Clear Cart</button>
                 </div>
